@@ -5,13 +5,16 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.KoreaIT.java.BAM.dto.Article;
+import com.KoreaIT.java.BAM.dto.Member;
 import com.KoreaIT.java.BAM.util.Util;
 
 public class App {
 	private List<Article> articles;
+	private List<Member> members;
 
 	public App() {
 		articles = new ArrayList<>();
+		members = new ArrayList<>();
 
 	}
 
@@ -34,8 +37,24 @@ public class App {
 			if (cmd.equals("exit")) {
 				break;
 			}
+			if (cmd.equals("member join")) {
+				int id = members.size() + 1;
+				String regDate = Util.getNowDateStr();
+				System.out.printf("로그인 아이디 : ");
+				String loginId = sc.nextLine();
+				System.out.printf("로그인 비밀번호 : ");
+				String loginPw = sc.nextLine();
+				System.out.printf("로그인 비밀번호 확인 : ");
+				String loginPwConfirm = sc.nextLine();
+				System.out.printf("이름 : ");
+				String name = sc.nextLine();
 
-			if (cmd.equals("article write")) {
+				Member member = new Member(id, regDate, loginId, loginPw, name);
+				members.add(member);
+
+				System.out.printf("%d번 회원님 환영합니다.\n", id);
+
+			} else if (cmd.equals("article write")) {
 				int id = articles.size() + 1;
 				String regDate = Util.getNowDateStr();
 				System.out.printf("제목 : ");
@@ -53,16 +72,18 @@ public class App {
 					System.out.println("게시물이 없습니다");
 					continue;
 				}
-				
+
 				String searchKeyword = cmd.substring("article list".length()).trim();
-				
+
 				List<Article> forPrintArticles = articles;
-				
-				if(searchKeyword.length()>0) {
+
+				if (searchKeyword.length() > 0) {
 					forPrintArticles = new ArrayList<>();
-					
-					for(Article article : articles) {
-						if(article.title.contains(searchKeyword)) {
+
+					for (Article article : articles) {
+
+						if (article.title.contains(searchKeyword)) {
+
 							forPrintArticles.add(article);
 						}
 					}
@@ -70,11 +91,12 @@ public class App {
 						System.out.println("검색 결과가 없습니다.");
 						continue;
 					}
-					
+
 				}
-				
+
 				System.out.println("번호    |   제목   |   조회   |   날짜");
 				for (int i = forPrintArticles.size() - 1; i >= 0; i--) {
+
 					Article article = forPrintArticles.get(i);
 
 					System.out.printf("%6d | %5s  | %5d  |%5s\n", article.id, article.title, article.hit,
@@ -93,7 +115,9 @@ public class App {
 					System.out.printf("%d번 게시물은 없습니다.\n", id);
 					continue;
 				}
+
 				foundArticle.increaseHit();
+
 				System.out.printf("번호 : %d\n", foundArticle.id);
 				System.out.printf("날짜 : %s\n", foundArticle.regDate);
 				System.out.printf("제목 : %s\n", foundArticle.title);
@@ -161,9 +185,9 @@ public class App {
 	}
 
 	private Article getArticleById(int id) {
-		
+
 		int index = getArticleIndexById(id);
-		
+
 		if (index != -1) {
 			return articles.get(index);
 		}

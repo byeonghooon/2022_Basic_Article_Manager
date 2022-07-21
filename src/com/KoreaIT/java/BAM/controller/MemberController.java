@@ -1,4 +1,4 @@
-package com.KoreaIT.java.BAM.Controller;
+package com.KoreaIT.java.BAM.controller;
 
 import java.util.List;
 import java.util.Scanner;

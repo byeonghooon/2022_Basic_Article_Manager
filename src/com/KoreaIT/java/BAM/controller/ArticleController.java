@@ -13,9 +13,9 @@ public class ArticleController extends Controller {
 	private String cmd;
 	private String actinMethodName;
 
-	public ArticleController(Scanner sc, List<Article> articles) {
+	public ArticleController(Scanner sc) {
 		this.sc = sc;
-		this.articles = articles;
+		articles = new ArrayList<>();
 	}
 
 	public void doAction(String cmd, String actinMethodName) {
@@ -37,6 +37,9 @@ public class ArticleController extends Controller {
 			break;
 		case "delete":
 			doDelete();
+			break;
+		default:
+			System.out.println("존재하지 않는 명령어입니다.");
 			break;
 		}
 	}
@@ -87,7 +90,7 @@ public class ArticleController extends Controller {
 		for (int i = forPrintArticles.size() - 1; i >= 0; i--) {
 			Article article = forPrintArticles.get(i);
 
-			System.out.printf("%7d | %6s   | %5s   | %5d\n", article.id, article.title, article.regDate, article.hit);
+			System.out.printf("%6d | %5s   | %5s   | %5d\n", article.id, article.title, article.regDate, article.hit);
 		}
 
 	}
@@ -191,4 +194,11 @@ public class ArticleController extends Controller {
 		return null;
 	}
 
+	public void makeTestData() {
+		System.out.println("테스트를 위한 게시물 데이터를 생성합니다.");
+
+		articles.add(new Article(1, Util.getNowDateStr(), "제목1", "내용1", 11));
+		articles.add(new Article(2, Util.getNowDateStr(), "제목2", "내용2", 22));
+		articles.add(new Article(3, Util.getNowDateStr(), "제목3", "내용3", 33));
+	}
 }

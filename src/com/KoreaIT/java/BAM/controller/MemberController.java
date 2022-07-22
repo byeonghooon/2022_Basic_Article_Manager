@@ -9,14 +9,23 @@ import com.KoreaIT.java.BAM.util.Util;
 public class MemberController extends Controller {
 	private Scanner sc;
 	private List<Member> members;
+	private String cmd;
+	private String actinMethodName;
 
 	public MemberController(Scanner sc, List<Member> members) {
 		this.sc = sc;
 		this.members = members;
 	}
 
-	public void doAction(String cmd) {
-
+	public void doAction(String cmd, String actinMethodName) {
+		this.cmd = cmd;
+		this.actinMethodName= actinMethodName;
+		
+		switch(actinMethodName) {
+		case "join" :
+			doJoin();
+			break;
+		} 
 	}
 
 	public void doJoin() {

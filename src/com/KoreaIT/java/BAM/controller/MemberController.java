@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.KoreaIT.java.BAM.dto.Article;
 import com.KoreaIT.java.BAM.dto.Member;
 import com.KoreaIT.java.BAM.util.Util;
 
@@ -56,7 +57,7 @@ public class MemberController extends Controller {
 		}
 
 		loginedMember = member;
-		System.out.printf("로그인 성공 %s님 환영 합니다.\n", loginedMember.name);
+		System.out.printf("로그인 성공 ! %s님 환영 합니다.\n", loginedMember.name);
 	}
 
 	private Member getMemberByLoginId(String loginId) {
@@ -130,5 +131,13 @@ public class MemberController extends Controller {
 			i++;
 		}
 		return -1;
+	}
+
+	public void makeTestData() {
+		System.out.println("테스트를 위한 회원 데이터를 생성합니다.");
+
+		members.add(new Member(1, Util.getNowDateStr(), "test1", "test1", "김철수"));
+		members.add(new Member(2, Util.getNowDateStr(), "test2", "test2", "김영희"));
+		members.add(new Member(3, Util.getNowDateStr(), "test3", "test3", "김철구"));
 	}
 }

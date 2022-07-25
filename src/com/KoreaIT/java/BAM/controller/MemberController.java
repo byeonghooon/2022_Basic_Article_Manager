@@ -13,7 +13,6 @@ public class MemberController extends Controller {
 	private List<Member> members;
 	private String cmd;
 	private String actinMethodName;
-	private Member loginedMember;
 
 	public MemberController(Scanner sc) {
 		this.sc = sc;
@@ -132,10 +131,6 @@ public class MemberController extends Controller {
 
 		System.out.printf("%d번 회원님 환영합니다.\n", id);
 
-	}
-
-	private boolean isLogined() {
-		return loginedMember != null;
 	}
 
 	private boolean isJoinableLoginId(String loginId) {

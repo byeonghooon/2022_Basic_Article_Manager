@@ -1,11 +1,9 @@
 package com.KoreaIT.java.BAM.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import com.KoreaIT.java.BAM.container.Container;
-import com.KoreaIT.java.BAM.dto.Article;
 import com.KoreaIT.java.BAM.dto.Member;
 import com.KoreaIT.java.BAM.util.Util;
 
@@ -52,21 +50,40 @@ public class MemberController extends Controller {
 
 	private void doLogin() {
 
-		System.out.printf("로그인 아이디 : ");
-		String loginId = sc.nextLine();
-		System.out.printf("로그인 비밀번호 : ");
-		String loginPw = sc.nextLine();
+		Member member = null;
+		String loginPw = null;
+		while (true) {
 
-		Member member = getMemberByLoginId(loginId);
+			System.out.printf("로그인 아이디 : ");
+			String loginId = sc.nextLine();
+			if (loginId.trim().length() == 0) {
+				System.out.println("로그인 아이디를 입력해주세요.");
+				continue;
+			}
 
-		if (member == null) {
-			System.out.println("일치하는 회원이 없습니다.");
-			return;
-		}
+			while (true) {
 
-		if (member.loginPw.equals(loginPw) == false) {
-			System.out.println("비밀번호를 다시 입력해주세요.");
-			return;
+				System.out.printf("로그인 비밀번호 : ");
+				loginPw = sc.nextLine();
+				if (loginPw.trim().length() == 0) {
+					System.out.println("로그인 아이디를 입력해주세요.");
+					continue;
+				}
+				break;
+			}
+
+			member = getMemberByLoginId(loginId);
+
+			if (member == null) {
+				System.out.println("일치하는 회원이 없습니다.");
+				return;
+			}
+
+			if (member.loginPw.equals(loginPw) == false) {
+				System.out.println("비밀번호를 다시 입력해주세요.");
+				return;
+			}
+			break;
 		}
 
 		loginedMember = member;
@@ -80,7 +97,7 @@ public class MemberController extends Controller {
 	}
 
 	public void doJoin() {
-		int id = Container.memberDao.getNewId();
+		int id = Container.memberDao.setNewId();
 		;
 		String regDate = Util.getNowDateStr();
 
@@ -157,10 +174,10 @@ public class MemberController extends Controller {
 		System.out.println("테스트를 위한 회원 데이터를 생성합니다.");
 
 		Container.memberDao
-				.add(new Member(Container.memberDao.getNewId(), Util.getNowDateStr(), "test1", "test1", "김철수"));
+				.add(new Member(Container.memberDao.setNewId(), Util.getNowDateStr(), "test1", "test1", "김철수"));
 		Container.memberDao
-				.add(new Member(Container.memberDao.getNewId(), Util.getNowDateStr(), "test2", "test2", "김영희"));
+				.add(new Member(Container.memberDao.setNewId(), Util.getNowDateStr(), "test2", "test2", "김영희"));
 		Container.memberDao
-				.add(new Member(Container.memberDao.getNewId(), Util.getNowDateStr(), "test3", "test3", "김철구"));
+				.add(new Member(Container.memberDao.setNewId(), Util.getNowDateStr(), "test3", "test3", "김철구"));
 	}
 }

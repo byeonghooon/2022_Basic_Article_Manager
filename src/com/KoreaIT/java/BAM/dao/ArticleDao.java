@@ -21,7 +21,7 @@ public class ArticleDao extends Dao {
 		if (searchKeyword != null && searchKeyword.length() != 0) {
 
 			List<Article> forPrintArticles = new ArrayList<>();
-
+			System.out.printf("검색어 : %s\n", searchKeyword);
 			if (searchKeyword.length() > 0) {
 
 				for (Article article : articles) {

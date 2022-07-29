@@ -7,6 +7,7 @@ import com.KoreaIT.java.BAM.container.Container;
 import com.KoreaIT.java.BAM.dto.Article;
 import com.KoreaIT.java.BAM.dto.Member;
 import com.KoreaIT.java.BAM.service.ArticleService;
+import com.KoreaIT.java.BAM.service.MemberService;
 import com.KoreaIT.java.BAM.util.Util;
 
 public class ArticleController extends Controller {
@@ -15,11 +16,13 @@ public class ArticleController extends Controller {
 	private String cmd;
 	private String actinMethodName;
 	private ArticleService articleService;
+	private MemberService memberService;
 
 	public ArticleController(Scanner sc) {
 		this.sc = sc;
 
 		articleService = Container.articleService;
+		memberService = Container.memberService;
 	}
 
 	public void doAction(String cmd, String actinMethodName) {
@@ -67,8 +70,6 @@ public class ArticleController extends Controller {
 
 		String searchKeyword = cmd.substring("article list".length()).trim();
 
-		System.out.printf("검색어 : %s\n", searchKeyword);
-
 		List<Article> forPrintArticles = Container.articleService.getForPrintArticles(searchKeyword);
 
 		if (forPrintArticles.size() == 0) {
@@ -80,7 +81,7 @@ public class ArticleController extends Controller {
 		for (int i = forPrintArticles.size() - 1; i >= 0; i--) {
 			Article article = forPrintArticles.get(i);
 
-			String writerName = null;
+			String writerName = memberService.getMemberNameById(article.memberId);
 
 			List<Member> members = Container.memberDao.members;
 
